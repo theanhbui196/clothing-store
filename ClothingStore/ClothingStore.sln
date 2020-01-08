@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothingStore", "ClothingStore\ClothingStore.csproj", "{5FDE2E93-3BF1-4D15-AB99-EEBB0B933E8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothingStore.Data", "ClothingStore.Data\ClothingStore.Data.csproj", "{3265957B-8EF4-4EF0-A4F7-577A2C38A25A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5FDE2E93-3BF1-4D15-AB99-EEBB0B933E8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FDE2E93-3BF1-4D15-AB99-EEBB0B933E8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FDE2E93-3BF1-4D15-AB99-EEBB0B933E8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FDE2E93-3BF1-4D15-AB99-EEBB0B933E8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3265957B-8EF4-4EF0-A4F7-577A2C38A25A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3265957B-8EF4-4EF0-A4F7-577A2C38A25A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3265957B-8EF4-4EF0-A4F7-577A2C38A25A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3265957B-8EF4-4EF0-A4F7-577A2C38A25A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {893F0861-6B80-48D7-8771-7482FEF903B0}
+	EndGlobalSection
+EndGlobal

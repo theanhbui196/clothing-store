@@ -1,0 +1,1996 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ClothingStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Age" Type="tinyint" />
+          <Property Name="Gender" Type="bit" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="varchar" MaxLength="200" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="WardId" Type="uniqueidentifier" />
+          <Property Name="DistrictId" Type="uniqueidentifier" />
+          <Property Name="CityId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="CustomerOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CustomerId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Status" Type="tinyint" />
+          <Property Name="ProductPrice" Type="int" />
+          <Property Name="ShippingFee" Type="int" />
+          <Property Name="ReturnedFee" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" />
+          <Property Name="ShippingId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomerOrder_ProductStyle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CustomerOrderId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductStyleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CurrentPrice" Type="int" />
+          <Property Name="SaleOffPrice" Type="int" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CityId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="InventoryName" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Inventory_ProductIn">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ImportDate" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="SupplierOrderId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Inventory_ProductOut">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ExportDate" Type="datetime" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="100" />
+          <Property Name="SellingPrice" Type="int" />
+          <Property Name="ProductTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SizeTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ColorTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductCode">
+          <Key>
+            <PropertyRef Name="ProductCode" />
+          </Key>
+          <Property Name="ProductCode" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductStyleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsInInventory" Type="bit" Nullable="false" />
+          <Property Name="InventoryId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductCode_In">
+          <Key>
+            <PropertyRef Name="ProductCode" />
+            <PropertyRef Name="Inventory_ProductIn_Id" />
+          </Key>
+          <Property Name="ProductCode" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Inventory_ProductIn_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ImportType" Type="tinyint" />
+          <Property Name="CustomerOrder_ProductStyle_Id" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="ProductCode_Out">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductCode" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ExportType" Type="tinyint" />
+          <Property Name="CustomerOrder_ProductStyle_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Inventory_ProductOut_Id" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductColor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ColorName" Type="nvarchar" MaxLength="100" />
+          <Property Name="HexColor" Type="varchar" MaxLength="7" />
+          <Property Name="ColorTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductColorType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ColorTypeName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsHexColorOnly" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductSale">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductStyleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CurrentPrice" Type="int" />
+          <Property Name="SaleOffPrice" Type="int" />
+          <Property Name="FromDate" Type="datetime" />
+          <Property Name="ToDate" Type="datetime" />
+          <Property Name="IsActived" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductSize">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SizeName" Type="nvarchar" MaxLength="50" />
+          <Property Name="SizeTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductSizeType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SizeTypeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductStyle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductSizeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductColorId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductStyle_Inventory">
+          <Key>
+            <PropertyRef Name="ProductStyleId" />
+            <PropertyRef Name="InventoryId" />
+          </Key>
+          <Property Name="ProductStyleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="InventoryId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="QuantityInInventory" Type="int" />
+        </EntityType>
+        <EntityType Name="ProductType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductTypeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shipping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ShippingName" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shipping_District">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DistrictId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ShippingId" Type="uniqueidentifier" />
+          <Property Name="ShippingFee" Type="int" />
+          <Property Name="ReturnedFee" Type="int" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SupplierName" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Supplier_Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SupplierId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductStyleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="BuyingPrice" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SupplierOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Product_Supplier_Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="InventoryId" Type="uniqueidentifier" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Password" Type="varchar" MaxLength="100" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ward">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Ward" Type="nvarchar" MaxLength="50" />
+          <Property Name="DistrictId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CustomerOrder_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="CustomerOrder" Type="Self.CustomerOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerOrder">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerOrder_ProductStyle_CustomerOrder">
+          <End Role="CustomerOrder" Type="Self.CustomerOrder" Multiplicity="1" />
+          <End Role="CustomerOrder_ProductStyle" Type="Self.CustomerOrder_ProductStyle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerOrder_ProductStyle">
+              <PropertyRef Name="CustomerOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerOrder_ProductStyle_ProductStyle">
+          <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="1" />
+          <End Role="CustomerOrder_ProductStyle" Type="Self.CustomerOrder_ProductStyle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductStyle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerOrder_ProductStyle">
+              <PropertyRef Name="ProductStyleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerOrder_Shipping_District">
+          <End Role="Shipping_District" Type="Self.Shipping_District" Multiplicity="1" />
+          <End Role="CustomerOrder" Type="Self.CustomerOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shipping_District">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerOrder">
+              <PropertyRef Name="ShippingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_District_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="District" Type="Self.District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="District">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventory_ProductIn_SupplierOrder">
+          <End Role="SupplierOrder" Type="Self.SupplierOrder" Multiplicity="0..1" />
+          <End Role="Inventory_ProductIn" Type="Self.Inventory_ProductIn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inventory_ProductIn">
+              <PropertyRef Name="SupplierOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductType">
+          <End Role="ProductType" Type="Self.ProductType" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCode_In_Inventory_ProductIn">
+          <End Role="Inventory_ProductIn" Type="Self.Inventory_ProductIn" Multiplicity="1" />
+          <End Role="ProductCode_In" Type="Self.ProductCode_In" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory_ProductIn">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductCode_In">
+              <PropertyRef Name="Inventory_ProductIn_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCode_In_ProductCode">
+          <End Role="ProductCode" Type="Self.ProductCode" Multiplicity="1" />
+          <End Role="ProductCode_In" Type="Self.ProductCode_In" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCode">
+              <PropertyRef Name="ProductCode" />
+            </Principal>
+            <Dependent Role="ProductCode_In">
+              <PropertyRef Name="ProductCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCode_Out_CustomerOrder_ProductStyle">
+          <End Role="CustomerOrder_ProductStyle" Type="Self.CustomerOrder_ProductStyle" Multiplicity="1" />
+          <End Role="ProductCode_Out" Type="Self.ProductCode_Out" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerOrder_ProductStyle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductCode_Out">
+              <PropertyRef Name="CustomerOrder_ProductStyle_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCode_Out_Inventory_ProductOut">
+          <End Role="Inventory_ProductOut" Type="Self.Inventory_ProductOut" Multiplicity="1" />
+          <End Role="ProductCode_Out" Type="Self.ProductCode_Out" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory_ProductOut">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductCode_Out">
+              <PropertyRef Name="Inventory_ProductOut_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCode_Out_ProductCode">
+          <End Role="ProductCode" Type="Self.ProductCode" Multiplicity="1" />
+          <End Role="ProductCode_Out" Type="Self.ProductCode_Out" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCode">
+              <PropertyRef Name="ProductCode" />
+            </Principal>
+            <Dependent Role="ProductCode_Out">
+              <PropertyRef Name="ProductCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductColor_ProductColorType">
+          <End Role="ProductColorType" Type="Self.ProductColorType" Multiplicity="1" />
+          <End Role="ProductColor" Type="Self.ProductColor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductColorType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductColor">
+              <PropertyRef Name="ColorTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSale_ProductStyle">
+          <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="1" />
+          <End Role="ProductSale" Type="Self.ProductSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductStyle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductSale">
+              <PropertyRef Name="ProductStyleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSize_ProductSizeType">
+          <End Role="ProductSizeType" Type="Self.ProductSizeType" Multiplicity="1" />
+          <End Role="ProductSize" Type="Self.ProductSize" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSizeType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductSize">
+              <PropertyRef Name="SizeTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductStyle_Inventory_Inventory">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="1" />
+          <End Role="ProductStyle_Inventory" Type="Self.ProductStyle_Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductStyle_Inventory">
+              <PropertyRef Name="InventoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductStyle_Inventory_ProductStyle">
+          <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="1" />
+          <End Role="ProductStyle_Inventory" Type="Self.ProductStyle_Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductStyle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductStyle_Inventory">
+              <PropertyRef Name="ProductStyleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductStyle_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductStyle">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductStyle_ProductColor">
+          <End Role="ProductColor" Type="Self.ProductColor" Multiplicity="1" />
+          <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductColor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductStyle">
+              <PropertyRef Name="ProductColorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductStyle_ProductSize">
+          <End Role="ProductSize" Type="Self.ProductSize" Multiplicity="1" />
+          <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSize">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductStyle">
+              <PropertyRef Name="ProductSizeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shipping_District_District">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="Shipping_District" Type="Self.Shipping_District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shipping_District">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shipping_District_Shipping">
+          <End Role="Shipping" Type="Self.Shipping" Multiplicity="0..1" />
+          <End Role="Shipping_District" Type="Self.Shipping_District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shipping">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shipping_District">
+              <PropertyRef Name="ShippingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Supplier_Product_ProductStyle">
+          <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="1" />
+          <End Role="Supplier_Product" Type="Self.Supplier_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductStyle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Supplier_Product">
+              <PropertyRef Name="ProductStyleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Supplier_Product_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="Supplier_Product" Type="Self.Supplier_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Supplier_Product">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierOrder_Inventory">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+          <End Role="SupplierOrder" Type="Self.SupplierOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupplierOrder">
+              <PropertyRef Name="InventoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierOrder_Supplier_Product">
+          <End Role="Supplier_Product" Type="Self.Supplier_Product" Multiplicity="1" />
+          <End Role="SupplierOrder" Type="Self.SupplierOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier_Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupplierOrder">
+              <PropertyRef Name="Product_Supplier_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ward_District">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="Ward" Type="Self.Ward" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ward">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="ClothingStoreModelStoreContainer">
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerOrder" EntityType="Self.CustomerOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerOrder_ProductStyle" EntityType="Self.CustomerOrder_ProductStyle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inventory_ProductIn" EntityType="Self.Inventory_ProductIn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inventory_ProductOut" EntityType="Self.Inventory_ProductOut" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCode" EntityType="Self.ProductCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCode_In" EntityType="Self.ProductCode_In" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCode_Out" EntityType="Self.ProductCode_Out" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductColor" EntityType="Self.ProductColor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductColorType" EntityType="Self.ProductColorType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductSale" EntityType="Self.ProductSale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductSize" EntityType="Self.ProductSize" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductSizeType" EntityType="Self.ProductSizeType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductStyle" EntityType="Self.ProductStyle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductStyle_Inventory" EntityType="Self.ProductStyle_Inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductType" EntityType="Self.ProductType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shipping" EntityType="Self.Shipping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shipping_District" EntityType="Self.Shipping_District" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier_Product" EntityType="Self.Supplier_Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SupplierOrder" EntityType="Self.SupplierOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ward" EntityType="Self.Ward" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CustomerOrder_Customer" Association="Self.FK_CustomerOrder_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CustomerOrder" EntitySet="CustomerOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerOrder_ProductStyle_CustomerOrder" Association="Self.FK_CustomerOrder_ProductStyle_CustomerOrder">
+            <End Role="CustomerOrder" EntitySet="CustomerOrder" />
+            <End Role="CustomerOrder_ProductStyle" EntitySet="CustomerOrder_ProductStyle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerOrder_ProductStyle_ProductStyle" Association="Self.FK_CustomerOrder_ProductStyle_ProductStyle">
+            <End Role="ProductStyle" EntitySet="ProductStyle" />
+            <End Role="CustomerOrder_ProductStyle" EntitySet="CustomerOrder_ProductStyle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerOrder_Shipping_District" Association="Self.FK_CustomerOrder_Shipping_District">
+            <End Role="Shipping_District" EntitySet="Shipping_District" />
+            <End Role="CustomerOrder" EntitySet="CustomerOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_District_City" Association="Self.FK_District_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="District" EntitySet="District" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_ProductIn_SupplierOrder" Association="Self.FK_Inventory_ProductIn_SupplierOrder">
+            <End Role="SupplierOrder" EntitySet="SupplierOrder" />
+            <End Role="Inventory_ProductIn" EntitySet="Inventory_ProductIn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductType" Association="Self.FK_Product_ProductType">
+            <End Role="ProductType" EntitySet="ProductType" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCode_In_Inventory_ProductIn" Association="Self.FK_ProductCode_In_Inventory_ProductIn">
+            <End Role="Inventory_ProductIn" EntitySet="Inventory_ProductIn" />
+            <End Role="ProductCode_In" EntitySet="ProductCode_In" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCode_In_ProductCode" Association="Self.FK_ProductCode_In_ProductCode">
+            <End Role="ProductCode" EntitySet="ProductCode" />
+            <End Role="ProductCode_In" EntitySet="ProductCode_In" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCode_Out_CustomerOrder_ProductStyle" Association="Self.FK_ProductCode_Out_CustomerOrder_ProductStyle">
+            <End Role="CustomerOrder_ProductStyle" EntitySet="CustomerOrder_ProductStyle" />
+            <End Role="ProductCode_Out" EntitySet="ProductCode_Out" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCode_Out_Inventory_ProductOut" Association="Self.FK_ProductCode_Out_Inventory_ProductOut">
+            <End Role="Inventory_ProductOut" EntitySet="Inventory_ProductOut" />
+            <End Role="ProductCode_Out" EntitySet="ProductCode_Out" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCode_Out_ProductCode" Association="Self.FK_ProductCode_Out_ProductCode">
+            <End Role="ProductCode" EntitySet="ProductCode" />
+            <End Role="ProductCode_Out" EntitySet="ProductCode_Out" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductColor_ProductColorType" Association="Self.FK_ProductColor_ProductColorType">
+            <End Role="ProductColorType" EntitySet="ProductColorType" />
+            <End Role="ProductColor" EntitySet="ProductColor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSale_ProductStyle" Association="Self.FK_ProductSale_ProductStyle">
+            <End Role="ProductStyle" EntitySet="ProductStyle" />
+            <End Role="ProductSale" EntitySet="ProductSale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSize_ProductSizeType" Association="Self.FK_ProductSize_ProductSizeType">
+            <End Role="ProductSizeType" EntitySet="ProductSizeType" />
+            <End Role="ProductSize" EntitySet="ProductSize" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductStyle_Inventory_Inventory" Association="Self.FK_ProductStyle_Inventory_Inventory">
+            <End Role="Inventory" EntitySet="Inventory" />
+            <End Role="ProductStyle_Inventory" EntitySet="ProductStyle_Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductStyle_Inventory_ProductStyle" Association="Self.FK_ProductStyle_Inventory_ProductStyle">
+            <End Role="ProductStyle" EntitySet="ProductStyle" />
+            <End Role="ProductStyle_Inventory" EntitySet="ProductStyle_Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductStyle_Product" Association="Self.FK_ProductStyle_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductStyle" EntitySet="ProductStyle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductStyle_ProductColor" Association="Self.FK_ProductStyle_ProductColor">
+            <End Role="ProductColor" EntitySet="ProductColor" />
+            <End Role="ProductStyle" EntitySet="ProductStyle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductStyle_ProductSize" Association="Self.FK_ProductStyle_ProductSize">
+            <End Role="ProductSize" EntitySet="ProductSize" />
+            <End Role="ProductStyle" EntitySet="ProductStyle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shipping_District_District" Association="Self.FK_Shipping_District_District">
+            <End Role="District" EntitySet="District" />
+            <End Role="Shipping_District" EntitySet="Shipping_District" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shipping_District_Shipping" Association="Self.FK_Shipping_District_Shipping">
+            <End Role="Shipping" EntitySet="Shipping" />
+            <End Role="Shipping_District" EntitySet="Shipping_District" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Supplier_Product_ProductStyle" Association="Self.FK_Supplier_Product_ProductStyle">
+            <End Role="ProductStyle" EntitySet="ProductStyle" />
+            <End Role="Supplier_Product" EntitySet="Supplier_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Supplier_Product_Supplier" Association="Self.FK_Supplier_Product_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Supplier_Product" EntitySet="Supplier_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierOrder_Inventory" Association="Self.FK_SupplierOrder_Inventory">
+            <End Role="Inventory" EntitySet="Inventory" />
+            <End Role="SupplierOrder" EntitySet="SupplierOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierOrder_Supplier_Product" Association="Self.FK_SupplierOrder_Supplier_Product">
+            <End Role="Supplier_Product" EntitySet="Supplier_Product" />
+            <End Role="SupplierOrder" EntitySet="SupplierOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ward_District" Association="Self.FK_Ward_District">
+            <End Role="District" EntitySet="District" />
+            <End Role="Ward" EntitySet="Ward" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ClothingStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="City1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Districts" Relationship="Self.FK_District_City" FromRole="City" ToRole="District" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Byte" />
+          <Property Name="Gender" Type="Boolean" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="WardId" Type="Guid" />
+          <Property Name="DistrictId" Type="Guid" />
+          <Property Name="CityId" Type="Guid" />
+          <NavigationProperty Name="CustomerOrders" Relationship="Self.FK_CustomerOrder_Customer" FromRole="Customer" ToRole="CustomerOrder" />
+        </EntityType>
+        <EntityType Name="CustomerOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="CustomerId" Type="Guid" Nullable="false" />
+          <Property Name="Status" Type="Byte" />
+          <Property Name="ProductPrice" Type="Int32" />
+          <Property Name="ShippingFee" Type="Int32" />
+          <Property Name="ReturnedFee" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="ShippingId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_CustomerOrder_Customer" FromRole="CustomerOrder" ToRole="Customer" />
+          <NavigationProperty Name="CustomerOrder_ProductStyle" Relationship="Self.FK_CustomerOrder_ProductStyle_CustomerOrder" FromRole="CustomerOrder" ToRole="CustomerOrder_ProductStyle" />
+          <NavigationProperty Name="Shipping_District" Relationship="Self.FK_CustomerOrder_Shipping_District" FromRole="CustomerOrder" ToRole="Shipping_District" />
+        </EntityType>
+        <EntityType Name="CustomerOrder_ProductStyle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="CustomerOrderId" Type="Guid" Nullable="false" />
+          <Property Name="ProductStyleId" Type="Guid" Nullable="false" />
+          <Property Name="CurrentPrice" Type="Int32" />
+          <Property Name="SaleOffPrice" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="CustomerOrder" Relationship="Self.FK_CustomerOrder_ProductStyle_CustomerOrder" FromRole="CustomerOrder_ProductStyle" ToRole="CustomerOrder" />
+          <NavigationProperty Name="ProductStyle" Relationship="Self.FK_CustomerOrder_ProductStyle_ProductStyle" FromRole="CustomerOrder_ProductStyle" ToRole="ProductStyle" />
+          <NavigationProperty Name="ProductCode_Out" Relationship="Self.FK_ProductCode_Out_CustomerOrder_ProductStyle" FromRole="CustomerOrder_ProductStyle" ToRole="ProductCode_Out" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="DistrictName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="City" Relationship="Self.FK_District_City" FromRole="District" ToRole="City" />
+          <NavigationProperty Name="Shipping_District" Relationship="Self.FK_Shipping_District_District" FromRole="District" ToRole="Shipping_District" />
+          <NavigationProperty Name="Wards" Relationship="Self.FK_Ward_District" FromRole="District" ToRole="Ward" />
+        </EntityType>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="InventoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="ProductStyle_Inventory" Relationship="Self.FK_ProductStyle_Inventory_Inventory" FromRole="Inventory" ToRole="ProductStyle_Inventory" />
+          <NavigationProperty Name="SupplierOrders" Relationship="Self.FK_SupplierOrder_Inventory" FromRole="Inventory" ToRole="SupplierOrder" />
+        </EntityType>
+        <EntityType Name="Inventory_ProductIn">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ImportDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierOrderId" Type="Guid" />
+          <NavigationProperty Name="SupplierOrder" Relationship="Self.FK_Inventory_ProductIn_SupplierOrder" FromRole="Inventory_ProductIn" ToRole="SupplierOrder" />
+          <NavigationProperty Name="ProductCode_In" Relationship="Self.FK_ProductCode_In_Inventory_ProductIn" FromRole="Inventory_ProductIn" ToRole="ProductCode_In" />
+        </EntityType>
+        <EntityType Name="Inventory_ProductOut">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ExportDate" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductCode_Out" Relationship="Self.FK_ProductCode_Out_Inventory_ProductOut" FromRole="Inventory_ProductOut" ToRole="ProductCode_Out" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SellingPrice" Type="Int32" />
+          <Property Name="ProductTypeId" Type="Guid" Nullable="false" />
+          <Property Name="SizeTypeId" Type="Guid" Nullable="false" />
+          <Property Name="ColorTypeId" Type="Guid" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="ProductType" Relationship="Self.FK_Product_ProductType" FromRole="Product" ToRole="ProductType" />
+          <NavigationProperty Name="ProductStyles" Relationship="Self.FK_ProductStyle_Product" FromRole="Product" ToRole="ProductStyle" />
+        </EntityType>
+        <EntityType Name="ProductCode">
+          <Key>
+            <PropertyRef Name="ProductCode1" />
+          </Key>
+          <Property Name="ProductCode1" Type="Guid" Nullable="false" />
+          <Property Name="ProductStyleId" Type="Guid" Nullable="false" />
+          <Property Name="IsInInventory" Type="Boolean" Nullable="false" />
+          <Property Name="InventoryId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="ProductCode_In" Relationship="Self.FK_ProductCode_In_ProductCode" FromRole="ProductCode" ToRole="ProductCode_In" />
+          <NavigationProperty Name="ProductCode_Out" Relationship="Self.FK_ProductCode_Out_ProductCode" FromRole="ProductCode" ToRole="ProductCode_Out" />
+        </EntityType>
+        <EntityType Name="ProductCode_In">
+          <Key>
+            <PropertyRef Name="ProductCode" />
+            <PropertyRef Name="Inventory_ProductIn_Id" />
+          </Key>
+          <Property Name="ProductCode" Type="Guid" Nullable="false" />
+          <Property Name="Inventory_ProductIn_Id" Type="Guid" Nullable="false" />
+          <Property Name="ImportType" Type="Byte" />
+          <Property Name="CustomerOrder_ProductStyle_Id" Type="Guid" />
+          <NavigationProperty Name="Inventory_ProductIn" Relationship="Self.FK_ProductCode_In_Inventory_ProductIn" FromRole="ProductCode_In" ToRole="Inventory_ProductIn" />
+          <NavigationProperty Name="ProductCode1" Relationship="Self.FK_ProductCode_In_ProductCode" FromRole="ProductCode_In" ToRole="ProductCode" />
+        </EntityType>
+        <EntityType Name="ProductCode_Out">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ProductCode" Type="Guid" Nullable="false" />
+          <Property Name="ExportType" Type="Byte" />
+          <Property Name="CustomerOrder_ProductStyle_Id" Type="Guid" Nullable="false" />
+          <Property Name="Inventory_ProductOut_Id" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="CustomerOrder_ProductStyle" Relationship="Self.FK_ProductCode_Out_CustomerOrder_ProductStyle" FromRole="ProductCode_Out" ToRole="CustomerOrder_ProductStyle" />
+          <NavigationProperty Name="Inventory_ProductOut" Relationship="Self.FK_ProductCode_Out_Inventory_ProductOut" FromRole="ProductCode_Out" ToRole="Inventory_ProductOut" />
+          <NavigationProperty Name="ProductCode1" Relationship="Self.FK_ProductCode_Out_ProductCode" FromRole="ProductCode_Out" ToRole="ProductCode" />
+        </EntityType>
+        <EntityType Name="ProductColor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ColorName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ColorTypeId" Type="Guid" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="ProductColorType" Relationship="Self.FK_ProductColor_ProductColorType" FromRole="ProductColor" ToRole="ProductColorType" />
+          <NavigationProperty Name="ProductStyles" Relationship="Self.FK_ProductStyle_ProductColor" FromRole="ProductColor" ToRole="ProductStyle" />
+          <Property Name="HexColor" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ProductColorType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ColorTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="ProductColors" Relationship="Self.FK_ProductColor_ProductColorType" FromRole="ProductColorType" ToRole="ProductColor" />
+          <Property Name="IsHexColorOnly" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductSale">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ProductStyleId" Type="Guid" Nullable="false" />
+          <Property Name="CurrentPrice" Type="Int32" />
+          <Property Name="SaleOffPrice" Type="Int32" />
+          <Property Name="FromDate" Type="DateTime" Precision="3" />
+          <Property Name="ToDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActived" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ProductStyle" Relationship="Self.FK_ProductSale_ProductStyle" FromRole="ProductSale" ToRole="ProductStyle" />
+        </EntityType>
+        <EntityType Name="ProductSize">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="SizeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SizeTypeId" Type="Guid" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="ProductSizeType" Relationship="Self.FK_ProductSize_ProductSizeType" FromRole="ProductSize" ToRole="ProductSizeType" />
+          <NavigationProperty Name="ProductStyles" Relationship="Self.FK_ProductStyle_ProductSize" FromRole="ProductSize" ToRole="ProductStyle" />
+        </EntityType>
+        <EntityType Name="ProductSizeType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="SizeTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="ProductSizes" Relationship="Self.FK_ProductSize_ProductSizeType" FromRole="ProductSizeType" ToRole="ProductSize" />
+        </EntityType>
+        <EntityType Name="ProductStyle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ProductId" Type="Guid" Nullable="false" />
+          <Property Name="ProductSizeId" Type="Guid" Nullable="false" />
+          <Property Name="ProductColorId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="CustomerOrder_ProductStyle" Relationship="Self.FK_CustomerOrder_ProductStyle_ProductStyle" FromRole="ProductStyle" ToRole="CustomerOrder_ProductStyle" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_ProductStyle_Product" FromRole="ProductStyle" ToRole="Product" />
+          <NavigationProperty Name="ProductColor" Relationship="Self.FK_ProductStyle_ProductColor" FromRole="ProductStyle" ToRole="ProductColor" />
+          <NavigationProperty Name="ProductSales" Relationship="Self.FK_ProductSale_ProductStyle" FromRole="ProductStyle" ToRole="ProductSale" />
+          <NavigationProperty Name="ProductSize" Relationship="Self.FK_ProductStyle_ProductSize" FromRole="ProductStyle" ToRole="ProductSize" />
+          <NavigationProperty Name="ProductStyle_Inventory" Relationship="Self.FK_ProductStyle_Inventory_ProductStyle" FromRole="ProductStyle" ToRole="ProductStyle_Inventory" />
+          <NavigationProperty Name="Supplier_Product" Relationship="Self.FK_Supplier_Product_ProductStyle" FromRole="ProductStyle" ToRole="Supplier_Product" />
+        </EntityType>
+        <EntityType Name="ProductStyle_Inventory">
+          <Key>
+            <PropertyRef Name="ProductStyleId" />
+            <PropertyRef Name="InventoryId" />
+          </Key>
+          <Property Name="ProductStyleId" Type="Guid" Nullable="false" />
+          <Property Name="InventoryId" Type="Guid" Nullable="false" />
+          <Property Name="QuantityInInventory" Type="Int32" />
+          <NavigationProperty Name="Inventory" Relationship="Self.FK_ProductStyle_Inventory_Inventory" FromRole="ProductStyle_Inventory" ToRole="Inventory" />
+          <NavigationProperty Name="ProductStyle" Relationship="Self.FK_ProductStyle_Inventory_ProductStyle" FromRole="ProductStyle_Inventory" ToRole="ProductStyle" />
+        </EntityType>
+        <EntityType Name="ProductType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ProductTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_ProductType" FromRole="ProductType" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Shipping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="ShippingName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Shipping_District" Relationship="Self.FK_Shipping_District_Shipping" FromRole="Shipping" ToRole="Shipping_District" />
+        </EntityType>
+        <EntityType Name="Shipping_District">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="DistrictId" Type="Guid" Nullable="false" />
+          <Property Name="ShippingId" Type="Guid" />
+          <Property Name="ShippingFee" Type="Int32" />
+          <Property Name="ReturnedFee" Type="Int32" />
+          <NavigationProperty Name="CustomerOrders" Relationship="Self.FK_CustomerOrder_Shipping_District" FromRole="Shipping_District" ToRole="CustomerOrder" />
+          <NavigationProperty Name="District" Relationship="Self.FK_Shipping_District_District" FromRole="Shipping_District" ToRole="District" />
+          <NavigationProperty Name="Shipping" Relationship="Self.FK_Shipping_District_Shipping" FromRole="Shipping_District" ToRole="Shipping" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="SupplierName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Supplier_Product" Relationship="Self.FK_Supplier_Product_Supplier" FromRole="Supplier" ToRole="Supplier_Product" />
+        </EntityType>
+        <EntityType Name="Supplier_Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="SupplierId" Type="Guid" Nullable="false" />
+          <Property Name="ProductStyleId" Type="Guid" Nullable="false" />
+          <Property Name="BuyingPrice" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProductStyle" Relationship="Self.FK_Supplier_Product_ProductStyle" FromRole="Supplier_Product" ToRole="ProductStyle" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK_Supplier_Product_Supplier" FromRole="Supplier_Product" ToRole="Supplier" />
+          <NavigationProperty Name="SupplierOrders" Relationship="Self.FK_SupplierOrder_Supplier_Product" FromRole="Supplier_Product" ToRole="SupplierOrder" />
+        </EntityType>
+        <EntityType Name="SupplierOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Product_Supplier_Id" Type="Guid" Nullable="false" />
+          <Property Name="InventoryId" Type="Guid" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Inventory" Relationship="Self.FK_SupplierOrder_Inventory" FromRole="SupplierOrder" ToRole="Inventory" />
+          <NavigationProperty Name="Inventory_ProductIn" Relationship="Self.FK_Inventory_ProductIn_SupplierOrder" FromRole="SupplierOrder" ToRole="Inventory_ProductIn" />
+          <NavigationProperty Name="Supplier_Product" Relationship="Self.FK_SupplierOrder_Supplier_Product" FromRole="SupplierOrder" ToRole="Supplier_Product" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ward">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Ward1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="District" Relationship="Self.FK_Ward_District" FromRole="Ward" ToRole="District" />
+        </EntityType>
+        <Association Name="FK_District_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="District" Type="Self.District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="District">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerOrder_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="CustomerOrder" Type="Self.CustomerOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerOrder">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerOrder_ProductStyle_CustomerOrder">
+          <End Role="CustomerOrder" Type="Self.CustomerOrder" Multiplicity="1" />
+          <End Role="CustomerOrder_ProductStyle" Type="Self.CustomerOrder_ProductStyle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerOrder_ProductStyle">
+              <PropertyRef Name="CustomerOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerOrder_Shipping_District">
+          <End Role="Shipping_District" Type="Self.Shipping_District" Multiplicity="1" />
+          <End Role="CustomerOrder" Type="Self.CustomerOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shipping_District">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerOrder">
+              <PropertyRef Name="ShippingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerOrder_ProductStyle_ProductStyle">
+          <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="1" />
+          <End Role="CustomerOrder_ProductStyle" Type="Self.CustomerOrder_ProductStyle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductStyle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerOrder_ProductStyle">
+              <PropertyRef Name="ProductStyleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCode_Out_CustomerOrder_ProductStyle">
+          <End Role="CustomerOrder_ProductStyle" Type="Self.CustomerOrder_ProductStyle" Multiplicity="1" />
+          <End Role="ProductCode_Out" Type="Self.ProductCode_Out" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerOrder_ProductStyle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductCode_Out">
+              <PropertyRef Name="CustomerOrder_ProductStyle_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shipping_District_District">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="Shipping_District" Type="Self.Shipping_District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shipping_District">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ward_District">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="Ward" Type="Self.Ward" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ward">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductStyle_Inventory_Inventory">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="1" />
+          <End Role="ProductStyle_Inventory" Type="Self.ProductStyle_Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductStyle_Inventory">
+              <PropertyRef Name="InventoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierOrder_Inventory">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="0..1" />
+          <End Role="SupplierOrder" Type="Self.SupplierOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupplierOrder">
+              <PropertyRef Name="InventoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventory_ProductIn_SupplierOrder">
+          <End Role="SupplierOrder" Type="Self.SupplierOrder" Multiplicity="0..1" />
+          <End Role="Inventory_ProductIn" Type="Self.Inventory_ProductIn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierOrder">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inventory_ProductIn">
+              <PropertyRef Name="SupplierOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCode_In_Inventory_ProductIn">
+          <End Role="Inventory_ProductIn" Type="Self.Inventory_ProductIn" Multiplicity="1" />
+          <End Role="ProductCode_In" Type="Self.ProductCode_In" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory_ProductIn">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductCode_In">
+              <PropertyRef Name="Inventory_ProductIn_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCode_Out_Inventory_ProductOut">
+          <End Role="Inventory_ProductOut" Type="Self.Inventory_ProductOut" Multiplicity="1" />
+          <End Role="ProductCode_Out" Type="Self.ProductCode_Out" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory_ProductOut">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductCode_Out">
+              <PropertyRef Name="Inventory_ProductOut_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductType">
+          <End Role="ProductType" Type="Self.ProductType" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductStyle_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductStyle">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCode_In_ProductCode">
+          <End Role="ProductCode" Type="Self.ProductCode" Multiplicity="1" />
+          <End Role="ProductCode_In" Type="Self.ProductCode_In" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCode">
+              <PropertyRef Name="ProductCode1" />
+            </Principal>
+            <Dependent Role="ProductCode_In">
+              <PropertyRef Name="ProductCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCode_Out_ProductCode">
+          <End Role="ProductCode" Type="Self.ProductCode" Multiplicity="1" />
+          <End Role="ProductCode_Out" Type="Self.ProductCode_Out" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCode">
+              <PropertyRef Name="ProductCode1" />
+            </Principal>
+            <Dependent Role="ProductCode_Out">
+              <PropertyRef Name="ProductCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductColor_ProductColorType">
+          <End Role="ProductColorType" Type="Self.ProductColorType" Multiplicity="1" />
+          <End Role="ProductColor" Type="Self.ProductColor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductColorType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductColor">
+              <PropertyRef Name="ColorTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductStyle_ProductColor">
+          <End Role="ProductColor" Type="Self.ProductColor" Multiplicity="1" />
+          <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductColor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductStyle">
+              <PropertyRef Name="ProductColorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSale_ProductStyle">
+          <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="1" />
+          <End Role="ProductSale" Type="Self.ProductSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductStyle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductSale">
+              <PropertyRef Name="ProductStyleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSize_ProductSizeType">
+          <End Role="ProductSizeType" Type="Self.ProductSizeType" Multiplicity="1" />
+          <End Role="ProductSize" Type="Self.ProductSize" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSizeType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductSize">
+              <PropertyRef Name="SizeTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductStyle_ProductSize">
+          <End Role="ProductSize" Type="Self.ProductSize" Multiplicity="1" />
+          <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSize">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductStyle">
+              <PropertyRef Name="ProductSizeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductStyle_Inventory_ProductStyle">
+          <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="1" />
+          <End Role="ProductStyle_Inventory" Type="Self.ProductStyle_Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductStyle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductStyle_Inventory">
+              <PropertyRef Name="ProductStyleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Supplier_Product_ProductStyle">
+          <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="1" />
+          <End Role="Supplier_Product" Type="Self.Supplier_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductStyle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Supplier_Product">
+              <PropertyRef Name="ProductStyleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shipping_District_Shipping">
+          <End Role="Shipping" Type="Self.Shipping" Multiplicity="0..1" />
+          <End Role="Shipping_District" Type="Self.Shipping_District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shipping">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shipping_District">
+              <PropertyRef Name="ShippingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Supplier_Product_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="Supplier_Product" Type="Self.Supplier_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Supplier_Product">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierOrder_Supplier_Product">
+          <End Role="Supplier_Product" Type="Self.Supplier_Product" Multiplicity="1" />
+          <End Role="SupplierOrder" Type="Self.SupplierOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier_Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupplierOrder">
+              <PropertyRef Name="Product_Supplier_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ClothingStoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cities" EntityType="Self.City" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="CustomerOrders" EntityType="Self.CustomerOrder" />
+          <EntitySet Name="CustomerOrder_ProductStyle" EntityType="Self.CustomerOrder_ProductStyle" />
+          <EntitySet Name="Districts" EntityType="Self.District" />
+          <EntitySet Name="Inventories" EntityType="Self.Inventory" />
+          <EntitySet Name="Inventory_ProductIn" EntityType="Self.Inventory_ProductIn" />
+          <EntitySet Name="Inventory_ProductOut" EntityType="Self.Inventory_ProductOut" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductCodes" EntityType="Self.ProductCode" />
+          <EntitySet Name="ProductCode_In" EntityType="Self.ProductCode_In" />
+          <EntitySet Name="ProductCode_Out" EntityType="Self.ProductCode_Out" />
+          <EntitySet Name="ProductColors" EntityType="Self.ProductColor" />
+          <EntitySet Name="ProductColorTypes" EntityType="Self.ProductColorType" />
+          <EntitySet Name="ProductSales" EntityType="Self.ProductSale" />
+          <EntitySet Name="ProductSizes" EntityType="Self.ProductSize" />
+          <EntitySet Name="ProductSizeTypes" EntityType="Self.ProductSizeType" />
+          <EntitySet Name="ProductStyles" EntityType="Self.ProductStyle" />
+          <EntitySet Name="ProductStyle_Inventory" EntityType="Self.ProductStyle_Inventory" />
+          <EntitySet Name="ProductTypes" EntityType="Self.ProductType" />
+          <EntitySet Name="Shippings" EntityType="Self.Shipping" />
+          <EntitySet Name="Shipping_District" EntityType="Self.Shipping_District" />
+          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+          <EntitySet Name="Supplier_Product" EntityType="Self.Supplier_Product" />
+          <EntitySet Name="SupplierOrders" EntityType="Self.SupplierOrder" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Wards" EntityType="Self.Ward" />
+          <AssociationSet Name="FK_District_City" Association="Self.FK_District_City">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="District" EntitySet="Districts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerOrder_Customer" Association="Self.FK_CustomerOrder_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerOrder" EntitySet="CustomerOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerOrder_ProductStyle_CustomerOrder" Association="Self.FK_CustomerOrder_ProductStyle_CustomerOrder">
+            <End Role="CustomerOrder" EntitySet="CustomerOrders" />
+            <End Role="CustomerOrder_ProductStyle" EntitySet="CustomerOrder_ProductStyle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerOrder_Shipping_District" Association="Self.FK_CustomerOrder_Shipping_District">
+            <End Role="Shipping_District" EntitySet="Shipping_District" />
+            <End Role="CustomerOrder" EntitySet="CustomerOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerOrder_ProductStyle_ProductStyle" Association="Self.FK_CustomerOrder_ProductStyle_ProductStyle">
+            <End Role="ProductStyle" EntitySet="ProductStyles" />
+            <End Role="CustomerOrder_ProductStyle" EntitySet="CustomerOrder_ProductStyle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCode_Out_CustomerOrder_ProductStyle" Association="Self.FK_ProductCode_Out_CustomerOrder_ProductStyle">
+            <End Role="CustomerOrder_ProductStyle" EntitySet="CustomerOrder_ProductStyle" />
+            <End Role="ProductCode_Out" EntitySet="ProductCode_Out" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shipping_District_District" Association="Self.FK_Shipping_District_District">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="Shipping_District" EntitySet="Shipping_District" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ward_District" Association="Self.FK_Ward_District">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="Ward" EntitySet="Wards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductStyle_Inventory_Inventory" Association="Self.FK_ProductStyle_Inventory_Inventory">
+            <End Role="Inventory" EntitySet="Inventories" />
+            <End Role="ProductStyle_Inventory" EntitySet="ProductStyle_Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierOrder_Inventory" Association="Self.FK_SupplierOrder_Inventory">
+            <End Role="Inventory" EntitySet="Inventories" />
+            <End Role="SupplierOrder" EntitySet="SupplierOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_ProductIn_SupplierOrder" Association="Self.FK_Inventory_ProductIn_SupplierOrder">
+            <End Role="SupplierOrder" EntitySet="SupplierOrders" />
+            <End Role="Inventory_ProductIn" EntitySet="Inventory_ProductIn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCode_In_Inventory_ProductIn" Association="Self.FK_ProductCode_In_Inventory_ProductIn">
+            <End Role="Inventory_ProductIn" EntitySet="Inventory_ProductIn" />
+            <End Role="ProductCode_In" EntitySet="ProductCode_In" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCode_Out_Inventory_ProductOut" Association="Self.FK_ProductCode_Out_Inventory_ProductOut">
+            <End Role="Inventory_ProductOut" EntitySet="Inventory_ProductOut" />
+            <End Role="ProductCode_Out" EntitySet="ProductCode_Out" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductType" Association="Self.FK_Product_ProductType">
+            <End Role="ProductType" EntitySet="ProductTypes" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductStyle_Product" Association="Self.FK_ProductStyle_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductStyle" EntitySet="ProductStyles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCode_In_ProductCode" Association="Self.FK_ProductCode_In_ProductCode">
+            <End Role="ProductCode" EntitySet="ProductCodes" />
+            <End Role="ProductCode_In" EntitySet="ProductCode_In" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCode_Out_ProductCode" Association="Self.FK_ProductCode_Out_ProductCode">
+            <End Role="ProductCode" EntitySet="ProductCodes" />
+            <End Role="ProductCode_Out" EntitySet="ProductCode_Out" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductColor_ProductColorType" Association="Self.FK_ProductColor_ProductColorType">
+            <End Role="ProductColorType" EntitySet="ProductColorTypes" />
+            <End Role="ProductColor" EntitySet="ProductColors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductStyle_ProductColor" Association="Self.FK_ProductStyle_ProductColor">
+            <End Role="ProductColor" EntitySet="ProductColors" />
+            <End Role="ProductStyle" EntitySet="ProductStyles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSale_ProductStyle" Association="Self.FK_ProductSale_ProductStyle">
+            <End Role="ProductStyle" EntitySet="ProductStyles" />
+            <End Role="ProductSale" EntitySet="ProductSales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSize_ProductSizeType" Association="Self.FK_ProductSize_ProductSizeType">
+            <End Role="ProductSizeType" EntitySet="ProductSizeTypes" />
+            <End Role="ProductSize" EntitySet="ProductSizes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductStyle_ProductSize" Association="Self.FK_ProductStyle_ProductSize">
+            <End Role="ProductSize" EntitySet="ProductSizes" />
+            <End Role="ProductStyle" EntitySet="ProductStyles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductStyle_Inventory_ProductStyle" Association="Self.FK_ProductStyle_Inventory_ProductStyle">
+            <End Role="ProductStyle" EntitySet="ProductStyles" />
+            <End Role="ProductStyle_Inventory" EntitySet="ProductStyle_Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Supplier_Product_ProductStyle" Association="Self.FK_Supplier_Product_ProductStyle">
+            <End Role="ProductStyle" EntitySet="ProductStyles" />
+            <End Role="Supplier_Product" EntitySet="Supplier_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shipping_District_Shipping" Association="Self.FK_Shipping_District_Shipping">
+            <End Role="Shipping" EntitySet="Shippings" />
+            <End Role="Shipping_District" EntitySet="Shipping_District" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Supplier_Product_Supplier" Association="Self.FK_Supplier_Product_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Supplier_Product" EntitySet="Supplier_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierOrder_Supplier_Product" Association="Self.FK_SupplierOrder_Supplier_Product">
+            <End Role="Supplier_Product" EntitySet="Supplier_Product" />
+            <End Role="SupplierOrder" EntitySet="SupplierOrders" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ClothingStoreModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ClothingStoreModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ClothingStoreModelStoreContainer" CdmEntityContainer="ClothingStoreEntities">
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="ClothingStoreModel.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="City1" ColumnName="City" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="ClothingStoreModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="WardId" ColumnName="WardId" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerOrders">
+            <EntityTypeMapping TypeName="ClothingStoreModel.CustomerOrder">
+              <MappingFragment StoreEntitySet="CustomerOrder">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
+                <ScalarProperty Name="ShippingFee" ColumnName="ShippingFee" />
+                <ScalarProperty Name="ReturnedFee" ColumnName="ReturnedFee" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="ShippingId" ColumnName="ShippingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerOrder_ProductStyle">
+            <EntityTypeMapping TypeName="ClothingStoreModel.CustomerOrder_ProductStyle">
+              <MappingFragment StoreEntitySet="CustomerOrder_ProductStyle">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CustomerOrderId" ColumnName="CustomerOrderId" />
+                <ScalarProperty Name="ProductStyleId" ColumnName="ProductStyleId" />
+                <ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
+                <ScalarProperty Name="SaleOffPrice" ColumnName="SaleOffPrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Districts">
+            <EntityTypeMapping TypeName="ClothingStoreModel.District">
+              <MappingFragment StoreEntitySet="District">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inventories">
+            <EntityTypeMapping TypeName="ClothingStoreModel.Inventory">
+              <MappingFragment StoreEntitySet="Inventory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="InventoryName" ColumnName="InventoryName" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inventory_ProductIn">
+            <EntityTypeMapping TypeName="ClothingStoreModel.Inventory_ProductIn">
+              <MappingFragment StoreEntitySet="Inventory_ProductIn">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ImportDate" ColumnName="ImportDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SupplierOrderId" ColumnName="SupplierOrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inventory_ProductOut">
+            <EntityTypeMapping TypeName="ClothingStoreModel.Inventory_ProductOut">
+              <MappingFragment StoreEntitySet="Inventory_ProductOut">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ExportDate" ColumnName="ExportDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="ClothingStoreModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="SizeTypeId" ColumnName="SizeTypeId" />
+                <ScalarProperty Name="ColorTypeId" ColumnName="ColorTypeId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCodes">
+            <EntityTypeMapping TypeName="ClothingStoreModel.ProductCode">
+              <MappingFragment StoreEntitySet="ProductCode">
+                <ScalarProperty Name="ProductCode1" ColumnName="ProductCode" />
+                <ScalarProperty Name="ProductStyleId" ColumnName="ProductStyleId" />
+                <ScalarProperty Name="IsInInventory" ColumnName="IsInInventory" />
+                <ScalarProperty Name="InventoryId" ColumnName="InventoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCode_In">
+            <EntityTypeMapping TypeName="ClothingStoreModel.ProductCode_In">
+              <MappingFragment StoreEntitySet="ProductCode_In">
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="Inventory_ProductIn_Id" ColumnName="Inventory_ProductIn_Id" />
+                <ScalarProperty Name="ImportType" ColumnName="ImportType" />
+                <ScalarProperty Name="CustomerOrder_ProductStyle_Id" ColumnName="CustomerOrder_ProductStyle_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCode_Out">
+            <EntityTypeMapping TypeName="ClothingStoreModel.ProductCode_Out">
+              <MappingFragment StoreEntitySet="ProductCode_Out">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="ExportType" ColumnName="ExportType" />
+                <ScalarProperty Name="CustomerOrder_ProductStyle_Id" ColumnName="CustomerOrder_ProductStyle_Id" />
+                <ScalarProperty Name="Inventory_ProductOut_Id" ColumnName="Inventory_ProductOut_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductColors">
+            <EntityTypeMapping TypeName="ClothingStoreModel.ProductColor">
+              <MappingFragment StoreEntitySet="ProductColor">
+                <ScalarProperty Name="HexColor" ColumnName="HexColor" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ColorName" ColumnName="ColorName" />
+                <ScalarProperty Name="ColorTypeId" ColumnName="ColorTypeId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductColorTypes">
+            <EntityTypeMapping TypeName="ClothingStoreModel.ProductColorType">
+              <MappingFragment StoreEntitySet="ProductColorType">
+                <ScalarProperty Name="IsHexColorOnly" ColumnName="IsHexColorOnly" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ColorTypeName" ColumnName="ColorTypeName" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductSales">
+            <EntityTypeMapping TypeName="ClothingStoreModel.ProductSale">
+              <MappingFragment StoreEntitySet="ProductSale">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductStyleId" ColumnName="ProductStyleId" />
+                <ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
+                <ScalarProperty Name="SaleOffPrice" ColumnName="SaleOffPrice" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="IsActived" ColumnName="IsActived" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductSizes">
+            <EntityTypeMapping TypeName="ClothingStoreModel.ProductSize">
+              <MappingFragment StoreEntitySet="ProductSize">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SizeName" ColumnName="SizeName" />
+                <ScalarProperty Name="SizeTypeId" ColumnName="SizeTypeId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductSizeTypes">
+            <EntityTypeMapping TypeName="ClothingStoreModel.ProductSizeType">
+              <MappingFragment StoreEntitySet="ProductSizeType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SizeTypeName" ColumnName="SizeTypeName" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductStyles">
+            <EntityTypeMapping TypeName="ClothingStoreModel.ProductStyle">
+              <MappingFragment StoreEntitySet="ProductStyle">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductSizeId" ColumnName="ProductSizeId" />
+                <ScalarProperty Name="ProductColorId" ColumnName="ProductColorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductStyle_Inventory">
+            <EntityTypeMapping TypeName="ClothingStoreModel.ProductStyle_Inventory">
+              <MappingFragment StoreEntitySet="ProductStyle_Inventory">
+                <ScalarProperty Name="ProductStyleId" ColumnName="ProductStyleId" />
+                <ScalarProperty Name="InventoryId" ColumnName="InventoryId" />
+                <ScalarProperty Name="QuantityInInventory" ColumnName="QuantityInInventory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTypes">
+            <EntityTypeMapping TypeName="ClothingStoreModel.ProductType">
+              <MappingFragment StoreEntitySet="ProductType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductTypeName" ColumnName="ProductTypeName" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shippings">
+            <EntityTypeMapping TypeName="ClothingStoreModel.Shipping">
+              <MappingFragment StoreEntitySet="Shipping">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ShippingName" ColumnName="ShippingName" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shipping_District">
+            <EntityTypeMapping TypeName="ClothingStoreModel.Shipping_District">
+              <MappingFragment StoreEntitySet="Shipping_District">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="ShippingId" ColumnName="ShippingId" />
+                <ScalarProperty Name="ShippingFee" ColumnName="ShippingFee" />
+                <ScalarProperty Name="ReturnedFee" ColumnName="ReturnedFee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="ClothingStoreModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Supplier_Product">
+            <EntityTypeMapping TypeName="ClothingStoreModel.Supplier_Product">
+              <MappingFragment StoreEntitySet="Supplier_Product">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="ProductStyleId" ColumnName="ProductStyleId" />
+                <ScalarProperty Name="BuyingPrice" ColumnName="BuyingPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierOrders">
+            <EntityTypeMapping TypeName="ClothingStoreModel.SupplierOrder">
+              <MappingFragment StoreEntitySet="SupplierOrder">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Product_Supplier_Id" ColumnName="Product_Supplier_Id" />
+                <ScalarProperty Name="InventoryId" ColumnName="InventoryId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ClothingStoreModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ClothingStoreModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wards">
+            <EntityTypeMapping TypeName="ClothingStoreModel.Ward">
+              <MappingFragment StoreEntitySet="Ward">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ward1" ColumnName="Ward" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ClothingStoreModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ClothingStoreModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ClothingStoreModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ClothingStoreModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClothingStoreModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ClothingStoreModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ClothingStoreModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ClothingStoreModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ClothingStoreModel.Store.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

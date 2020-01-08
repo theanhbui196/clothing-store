@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="73bf39f3608a419386c59f16047963f5" Name="Diagram1" ZoomLevel="83">
+        <EntityTypeShape EntityType="ClothingStoreModel.City" Width="1.5" PointX="1.5" PointY="24.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.Customer" Width="1.5" PointX="3" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.CustomerOrder" Width="1.5" PointX="5.25" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.CustomerOrder_ProductStyle" Width="1.5" PointX="7.5" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.District" Width="1.5" PointX="0.75" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.Inventory" Width="1.5" PointX="10.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.Inventory_ProductIn" Width="1.5" PointX="15" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.Inventory_ProductOut" Width="1.5" PointX="7.5" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.Product" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.ProductCode" Width="1.5" PointX="15" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.ProductCode_In" Width="1.5" PointX="17.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.ProductCode_Out" Width="1.5" PointX="9.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.ProductColor" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.ProductColorType" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.ProductSale" Width="1.5" PointX="7.5" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.ProductSize" Width="1.5" PointX="3" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.ProductSizeType" Width="1.5" PointX="0.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.ProductStyle" Width="1.5" PointX="5.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.ProductStyle_Inventory" Width="1.5" PointX="10.5" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.ProductType" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.Shipping" Width="1.5" PointX="0.75" PointY="27.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.Shipping_District" Width="1.5" PointX="3" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.Supplier" Width="1.5" PointX="8.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.Supplier_Product" Width="1.5" PointX="10.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.SupplierOrder" Width="1.5" PointX="12.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.sysdiagram" Width="1.5" PointX="11.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.User" Width="1.5" PointX="12.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ClothingStoreModel.Ward" Width="1.5" PointX="3" PointY="27.5" IsExpanded="true" />
+        <AssociationConnector Association="ClothingStoreModel.FK_District_City" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_CustomerOrder_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_CustomerOrder_ProductStyle_CustomerOrder" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_CustomerOrder_Shipping_District" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_CustomerOrder_ProductStyle_ProductStyle" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_ProductCode_Out_CustomerOrder_ProductStyle" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_Shipping_District_District" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_Ward_District" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_ProductStyle_Inventory_Inventory" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_SupplierOrder_Inventory" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_Inventory_ProductIn_SupplierOrder" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_ProductCode_In_Inventory_ProductIn" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_ProductCode_Out_Inventory_ProductOut" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_Product_ProductType" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_ProductStyle_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_ProductCode_In_ProductCode" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_ProductCode_Out_ProductCode" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_ProductColor_ProductColorType" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_ProductStyle_ProductColor" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_ProductSale_ProductStyle" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_ProductSize_ProductSizeType" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_ProductStyle_ProductSize" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_ProductStyle_Inventory_ProductStyle" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_Supplier_Product_ProductStyle" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_Shipping_District_Shipping" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_Supplier_Product_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="ClothingStoreModel.FK_SupplierOrder_Supplier_Product" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
